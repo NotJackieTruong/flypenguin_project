@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <style>
+    #my-iframe {
+      width: 800px;
+      height: 600px;
+      margin: auto;
+    }
+    .iframe-container{
+      display: flex;
+    }
+  </style>
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <p>Welcome to <%= title %></p>
+  <p>This is parent</p>
+  <div class="iframe-container">
+    <iframe id="my-iframe" frameborder="0" src="http://localhost:3001/"></iframe>
+
+  </div>
+
+  <script>
+    // listen for iframe loaded event
+    const receiveMessage = (event) => {
+      if (event.origin !== 'http://localhost:3001') return
+      console.log('parent receives message from iframe: ', event.data)
+      if (event.data && event.data.accessToken && event.data.user) {
+        for (var prop in event.data) {
+          if(prop !== 'user'){
+            window.localStorage.setItem(prop, event.data[prop])
+
+          } else {
+            window.localStorage.setItem('userName', event.data['user'].name)
+            window.localStorage.setItem('userEmail', event.data['user'].email)
+            window.localStorage.setItem('userId', event.data['user']._id)
+          }
+        }
+      }
+      window.location.replace(event.data.url)
+
+    }
+    // send message
+    const postMessage = () => {
+      document.querySelector('iframe#my-iframe').contentWindow.postMessage('Message from parent...', '*')
+    }
+    window.addEventListener('message', receiveMessage, false)
+    window.localStorage.clear()
+
+  </script>
+</body>
+
+</html>

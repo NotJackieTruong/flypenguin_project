@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <%- include('../components/navbar.ejs') %>
+  <div class="page-content-container">
+    <!-- Card -->
+    <div class="card" style="display: flex; flex-direction: row; width: 50%;">
+      <!-- Card image -->
+      <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="Card image cap"
+        style="width: 18rem;">
+      <!-- Card content -->
+      <div class="card-body">
+        <!-- Title -->
+        <h4 class="card-title"><a><%= result.name %></a></h4>
+        <!-- Text -->
+        <p class="card-text"> <%= result._id %></p>
+        <p class="card-text"> <%= result.email %></p>
+      </div>
+      <div class="card-footer">
+        <!-- Button -->
+        <button class="btn btn-primary btn-sm" id="subtract-token">Subtract Token</button>
+      </div>
+    </div>
+    <!-- Card -->
+  </div>
+
+  <script>
+    document.querySelector('button#subtract-token').addEventListener('click', (event) => {
+      console.log('event: ', event.target)
+
+    })
+  </script>
+</body>
+
+</html>
